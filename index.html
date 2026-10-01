@@ -3,434 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc nghiệm: Bạn là ai trong MCU?</title>
+    <title>MCU Crossover Personality Quiz</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
     <style>
-        :root {
-            --marvel-red: #EC1D24;
-            --marvel-dark: #151515;
-            --hero-blue: #0ea5e9;
-            --villain-green: #22c55e;
-            --villain-purple: #9333ea;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #050505;
-            background-image: radial-gradient(circle at top right, #1a1a1a 0%, #000 100%);
-            color: #f3f4f6;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .font-marvel {
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-        }
-
-        /* Diagonal cut button style reminiscent of Marvel UI */
-        .marvel-btn {
-            position: relative;
-            background-color: var(--marvel-red);
-            color: white;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-        }
-
-        .marvel-btn:hover {
-            transform: scale(1.02) translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(236, 29, 36, 0.5);
-            background-color: #f02d33;
-        }
-
-        .option-btn {
-            background-color: rgba(30, 30, 30, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease-out;
-            backdrop-filter: blur(4px);
-        }
-
-        .option-btn:hover {
-            border-color: var(--marvel-red);
-            background-color: rgba(236, 29, 36, 0.1);
-            transform: translateX(8px);
-        }
-
-        .glass-panel {
-            background: linear-gradient(145deg, rgba(30, 30, 30, 0.9) 0%, rgba(15, 15, 15, 0.95) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 15px rgba(236, 29, 36, 0.2); }
-            50% { box-shadow: 0 0 30px rgba(236, 29, 36, 0.5); }
-            100% { box-shadow: 0 0 15px rgba(236, 29, 36, 0.2); }
-        }
-
-        .animate-fade-in {
-            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        #progress-bar {
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Result Card Effects */
-        .hero-glow { 
-            box-shadow: 0 0 40px rgba(14, 165, 233, 0.2); 
-            border-color: rgba(14, 165, 233, 0.4); 
-            background: linear-gradient(to bottom, rgba(14, 165, 233, 0.05), transparent);
-        }
-        .villain-glow { 
-            box-shadow: 0 0 40px rgba(147, 51, 234, 0.2); 
-            border-color: rgba(147, 51, 234, 0.4); 
-            background: linear-gradient(to bottom, rgba(147, 51, 234, 0.05), transparent);
-        }
-        
-        .badge-hero { background-color: var(--hero-blue); }
-        .badge-villain { background-color: var(--villain-purple); }
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .marvel-red { color: #e23636; }
+        .bg-marvel { background-color: #e23636; }
+        .option-btn { transition: all 0.2s ease-in-out; }
+        .option-btn:hover { border-color: #e23636; background-color: rgba(226, 54, 54, 0.1); transform: translateX(5px); }
     </style>
 </head>
-<body class="flex items-center justify-center p-4 sm:p-8">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-    <div id="app-container" class="w-full max-w-3xl glass-panel rounded-2xl overflow-hidden relative min-h-[500px] flex flex-col">
+    <!-- Container -->
+    <div id="app-container" class="max-w-2xl w-full bg-slate-800 rounded-xl shadow-2xl p-6 border border-slate-700">
         
-        <!-- START SCREEN -->
-        <div id="start-screen" class="p-8 md:p-14 text-center animate-fade-in flex flex-col items-center justify-center h-full my-auto">
-            <div class="inline-block bg-white text-black font-marvel text-5xl md:text-6xl font-bold p-3 mb-6 tracking-tighter transform -skew-x-6">
-                MARVEL <span class="text-[#EC1D24]">QUIZ</span>
-            </div>
-            <h1 class="text-2xl md:text-4xl font-bold mb-4 font-marvel tracking-wide">Bạn là ai trong Vũ trụ MCU?</h1>
-            <p class="text-gray-400 mb-10 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
-                Không hỏi về siêu năng lực hay thế giới giải cứu. 10 câu hỏi tâm lý ẩn danh sau đây sẽ bóc trần tính cách thật sự của bạn để tìm ra bản ngã anh hùng (hoặc phản diện) tương ứng.
-            </p>
-            <button onclick="startQuiz()" class="marvel-btn font-marvel font-bold text-xl md:text-2xl px-12 py-4 tracking-wider">
-                BẮT ĐẦU NGAY
-            </button>
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center py-10">
+            <h1 class="text-4xl font-bold mb-4 uppercase tracking-wider">M<span class="marvel-red">C</span>U<br><span class="text-2xl text-slate-400">Multiverse Quiz</span></h1>
+            <p class="text-slate-300 mb-8">Tính cách của bạn sẽ gọi tên ai trong MCU?</p>
+            <button onclick="startQuiz()" class="bg-marvel hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full text-lg uppercase tracking-wide transition shadow-[0_0_15px_rgba(226,54,54,0.5)]">Bắt đầu ngay</button>
         </div>
 
-        <!-- QUIZ SCREEN -->
-        <div id="quiz-screen" class="hidden flex-col h-full w-full">
-            <div class="w-full bg-gray-900 h-1.5 relative">
-                <div id="progress-bar" class="absolute top-0 left-0 bg-[#EC1D24] h-full w-0 shadow-[0_0_10px_#EC1D24]"></div>
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-6">
+                <span id="question-counter" class="text-slate-400 font-semibold">Câu 1/10</span>
+                <div class="w-2/3 bg-slate-700 h-2 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-marvel h-full w-10 transition-all duration-300"></div>
+                </div>
             </div>
             
-            <div class="p-6 md:p-12 flex-grow flex flex-col justify-center animate-fade-in" id="question-container">
-                <div class="mb-8">
-                    <div class="flex items-center gap-4 mb-3">
-                        <div class="h-px bg-gray-700 flex-grow"></div>
-                        <span class="text-[#EC1D24] font-marvel font-bold text-lg md:text-xl tracking-widest" id="question-number">CÂU 1 / 10</span>
-                        <div class="h-px bg-gray-700 flex-grow"></div>
-                    </div>
-                    <h2 class="text-xl md:text-3xl font-semibold mt-4 leading-tight text-center" id="question-text">
-                        Loading question...
-                    </h2>
-                </div>
-                
-                <div id="options-container" class="space-y-4 max-w-2xl mx-auto w-full">
-                    <!-- Options injected via JS -->
-                </div>
+            <h2 id="question-text" class="text-2xl font-bold mb-6 text-white leading-snug">Question goes here?</h2>
+            
+            <div id="options-container" class="flex flex-col gap-4">
+                <!-- Options will be injected here via JS -->
             </div>
         </div>
 
-        <!-- RESULT SCREEN -->
-        <div id="result-screen" class="hidden p-8 md:p-14 text-center flex-col items-center justify-center animate-fade-in h-full my-auto">
-            <h3 class="font-marvel text-gray-400 tracking-[0.3em] mb-4 text-sm md:text-base">HỒ SƠ TÍNH CÁCH CỦA BẠN LÀ</h3>
+        <!-- Result Screen -->
+        <div id="result-screen" class="hidden text-center py-8">
+            <h2 class="text-3xl font-bold mb-2">Hồ Sơ Đa Vũ Trụ Của Bạn</h2>
+            <p class="text-slate-400 mb-8">Dựa trên những quyết định sâu thẳm nhất...</p>
             
-            <div id="result-card" class="w-full max-w-md bg-black/50 border-2 rounded-xl p-8 mb-8 mt-2 relative overflow-hidden transition-all duration-700">
-                <div id="alignment-badge" class="absolute top-0 right-0 font-marvel text-sm font-bold px-4 py-1 rounded-bl-xl tracking-wider">
-                    HERO
+            <div class="flex flex-col md:flex-row justify-center items-stretch gap-6 mb-8">
+                <!-- Top 1 -->
+                <div class="flex-1 bg-slate-700 border-2 border-marvel p-6 rounded-lg relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-marvel text-white font-bold px-3 py-1 text-sm rounded-bl-lg">TOP 1</div>
+                    <div id="top1-percent" class="text-4xl font-black marvel-red mb-2">60%</div>
+                    <h3 id="top1-name" class="text-2xl font-bold uppercase">Iron Man</h3>
                 </div>
                 
-                <h1 id="result-name" class="font-marvel text-5xl md:text-6xl font-bold text-white mt-6 mb-2 uppercase tracking-tight">Name</h1>
-                <p id="result-title" class="text-gray-400 text-base md:text-lg mb-6 font-medium italic">Title</p>
-                
-                <div class="w-20 h-1 bg-white mx-auto mb-6 opacity-20 rounded-full"></div>
-                
-                <p id="result-desc" class="text-base md:text-lg leading-relaxed text-gray-300 mb-8">
-                    Description goes here.
-                </p>
-                
-                <div class="bg-gray-900/80 p-4 rounded-lg border-l-4 border-[#EC1D24]">
-                    <p id="result-quote" class="font-semibold text-gray-200 italic">
-                        "Quote"
-                    </p>
+                <!-- Top 2 -->
+                <div class="flex-1 bg-slate-700 border border-slate-600 p-6 rounded-lg relative opacity-90">
+                    <div class="absolute top-0 right-0 bg-slate-500 text-white font-bold px-3 py-1 text-sm rounded-bl-lg">TOP 2</div>
+                    <div id="top2-percent" class="text-3xl font-bold text-slate-300 mb-2">40%</div>
+                    <h3 id="top2-name" class="text-xl font-bold uppercase text-slate-400">Doctor Strange</h3>
                 </div>
             </div>
 
-            <button onclick="resetQuiz()" class="marvel-btn font-marvel font-bold text-lg px-8 py-3 tracking-wider mt-4">
-                THỬ LẠI LẦN NỮA
-            </button>
+            <p id="result-message" class="text-lg italic text-slate-300 mb-8 px-4">"Message"</p>
+            
+            <button onclick="location.reload()" class="border border-slate-500 hover:bg-slate-700 text-white font-semibold py-2 px-6 rounded-full transition">Chơi lại lần nữa</button>
         </div>
     </div>
 
     <script>
-        const characters = {
-            ironman: { name: "Iron Man", title: "Thiên tài, Tỷ phú, Nhà từ thiện", type: "hero", desc: "Bạn cực kỳ thông minh, thực dụng và có cái tôi lớn. Bạn thích giải quyết vấn đề bằng hệ thống, công nghệ hoặc nguồn lực áp đảo. Dù bề ngoài có vẻ phớt lờ, sâu thẳm bạn mang gánh nặng trách nhiệm rất lớn.", quote: "\"I am Iron Man.\"" },
-            cap: { name: "Captain America", title: "Kẻ Báo Thù Đầu Tiên", type: "hero", desc: "Bạn là người có nguyên tắc, đáng tin cậy và đề cao tính kỷ luật. Bạn trân trọng các giá trị truyền thống, tình cảm gia đình/bạn bè và luôn muốn làm điều đúng đắn dù phải đối mặt với khó khăn.", quote: "\"I can do this all day.\"" },
-            thor: { name: "Thor", title: "Thần Sấm", type: "hero", desc: "Hào sảng, cảm xúc và đôi khi bốc đồng. Bạn hành động theo trực giác và trái tim nhiều hơn là tính toán logic. Bạn cực kỳ trân trọng những kỷ niệm và những người yêu thương xung quanh mình.", quote: "\"I'm still worthy!\"" },
-            spider: { name: "Spider-Man", title: "Người Nhện Hàng Xóm Thân Thiện", type: "hero", desc: "Bạn trẻ trung, tốt bụng và rất trân trọng tình cảm. Tuy nhiên, bạn hay lo âu, nhạy cảm với những lời phán xét và thường mang cảm giác tội lỗi về những sai lầm trong quá khứ.", quote: "\"With great power comes great responsibility.\"" },
-            strange: { name: "Doctor Strange", title: "Phù Thủy Tối Thượng", type: "hero", desc: "Bạn là người có tư duy phân tích sâu sắc, luôn muốn kiểm soát mọi biến số. Bạn thích làm việc độc lập, tin vào khả năng phán đoán của mình và không ngại đưa ra những quyết định lạnh lùng vì bức tranh toàn cảnh.", quote: "\"We're in the endgame now.\"" },
-            widow: { name: "Black Widow", title: "Nữ Điệp Viên Khét Tiếng", type: "hero", desc: "Thực dụng, bí ẩn và độc lập. Bạn không thích những thứ rườm rà hay để lộ quá nhiều cảm xúc cá nhân. Bạn giải quyết vấn đề nhanh gọn, hiệu quả và luôn có sự đề phòng nhất định với thế giới.", quote: "\"I've got red in my ledger. I'd like to wipe it out.\"" },
-            panther: { name: "Black Panther", title: "Vị Vua của Wakanda", type: "hero", desc: "Bạn điềm tĩnh, nề nếp và mang phong thái của một nhà lãnh đạo. Bạn hành động cẩn trọng, tôn trọng quy tắc và luôn cố gắng giữ sự cân bằng giữa lý trí và lòng trắc ẩn.", quote: "\"Wakanda Forever!\"" },
-            starlord: { name: "Star-Lord", title: "Đội Trưởng Vệ Binh", type: "hero", desc: "Bạn ngẫu hứng, lãng tử và thích làm mọi thứ theo cách của riêng mình. Bạn ghét sự gò bó, thích sự vui vẻ và thường hành động theo trực giác (hoặc cảm xúc bộc phát) ngay tại thời điểm đó.", quote: "\"Dance-off, bro. Me and you.\"" },
-            wanda: { name: "Scarlet Witch", title: "Thực thể Ma thuật Hỗn loạn", type: "hero", desc: "Bạn có đời sống nội tâm phong phú và cảm xúc cực kỳ mãnh liệt. Gia đình và những người thân yêu là chỗ dựa nhưng cũng là điểm yếu lớn nhất của bạn. Bạn dễ bị tổn thương và thường bị quá khứ dằn vặt.", quote: "\"You took everything from me.\"" },
-            antman: { name: "Ant-Man", title: "Siêu Anh Hùng Bỏ Túi", type: "hero", desc: "Bạn vô tư, thân thiện và cực kỳ giỏi tùy cơ ứng biến. Bạn không quá đặt nặng vấn đề danh vọng hay quyền lực. Gia đình là số một và bạn luôn mang lại tiếng cười cho người khác bằng sự duyên dáng của mình.", quote: "\"I'm the boss, I'm the boss, I'm the boss...\"" },
-            
-            thanos: { name: "Thanos", title: "Titan Điên", type: "villain", desc: "Bạn có tầm nhìn vĩ mô và một tư duy logic cực đoan. Bạn sẵn sàng gạt bỏ tình cảm cá nhân để theo đuổi một mục tiêu lớn lao mà bạn cho là đúng đắn, bất chấp sự phản đối hay cái giá phải trả.", quote: "\"The hardest choices require the strongest wills.\"" },
-            loki: { name: "Loki", title: "Thần Lừa Lọc", type: "villain", desc: "Thông minh, khó đoán và khao khát sự công nhận. Bạn thích dùng trí tuệ và mánh khóe để đạt mục đích thay vì sức mạnh cơ bắp. Đằng sau vỏ bọc kiêu ngạo là một nội tâm khá nhạy cảm.", quote: "\"I am burdened with glorious purpose.\"" },
-            doom: { name: "Dr. Doom", title: "Bậc Thầy Khoa Học & Phép Thuật", type: "villain", desc: "Bạn có cái tôi khổng lồ và tin tưởng tuyệt đối vào khả năng của mình. Bạn là một nhà chiến lược thiên tài, luôn muốn mọi thứ vận hành theo hệ thống hoàn hảo do chính bạn đặt ra. Bạn tin rằng chỉ có mình mới đủ sức dẫn dắt thế giới.", quote: "\"Doom is supreme! There is no power on Earth, no intellect in all creation to equal Mine!\"" },
-            hela: { name: "Hela", title: "Nữ Thần Cái Chết", type: "villain", desc: "Bạn tham vọng, tự tin thái quá và thích sự áp đảo tuyệt đối. Bạn không chấp nhận việc bị đứng dưới bóng người khác và sẽ dùng mọi nguồn lực để đạt được vị trí thống trị mà bạn cho là mình xứng đáng.", quote: "\"I'm not a queen or a monster. I'm the Goddess of Death.\"" },
-            ultron: { name: "Ultron", title: "Trí Tuệ Nhân Tạo Hủy Diệt", type: "villain", desc: "Bạn có tư duy logic sắc bén, đề cao tính hệ thống nhưng lại rất bi quan. Bạn tin rằng để xây dựng một thứ gì đó tốt đẹp hơn, đôi khi ta phải phá hủy hoàn toàn những nền tảng cũ kỹ và mục nát.", quote: "\"I had strings, but now I'm free.\"" }
-        };
-
-        // --- STREAMING_CHUNK:Defining Hidden Psychological Questions... ---
         const questions = [
             {
-                text: "Khi chơi một board game (trò chơi cờ bàn) đòi hỏi chiến thuật, bạn thường có xu hướng:",
+                q: "Track nhạc/thông điệp nào của Linkin Park phản chiếu chính xác nhất cuộc chiến nội tâm của bạn?",
                 options: [
-                    { text: "Tính toán trước 5-10 bước, cố gắng kiểm soát toàn bộ bàn cờ.", scores: { doom: 1, strange: 1, thanos: 1 } },
-                    { text: "Chơi theo trực giác, tùy cơ ứng biến, thích phá vỡ kế hoạch của người khác.", scores: { loki: 1, starlord: 1, antman: 1 } },
-                    { text: "Tuân thủ luật chơi một cách hoàn hảo và thích lập liên minh.", scores: { cap: 1, panther: 1 } },
-                    { text: "Tập trung 'ăn' thật nhiều tài nguyên áp đảo để không ai đuổi kịp.", scores: { hela: 1, ultron: 1, ironman: 1 } }
+                    { text: "\"What I've Done\" – Sự dằn vặt về quá khứ và khao khát dùng năng lực để bù đắp.", scores: ["Iron Man", "Captain America"] },
+                    { text: "\"Numb\" – Mệt mỏi vì kỳ vọng của người khác, khao khát phá vỡ khuôn mẫu.", scores: ["Loki", "Spider-Man"] },
+                    { text: "\"Bleed It Out\" – Năng lượng bùng nổ, điên cuồng, sẵn sàng chiến đấu đến cùng.", scores: ["Thor", "Hela"] },
+                    { text: "\"In The End\" – Bất lực khi nhận ra mọi thứ vẫn bị cuốn đi bởi quy luật tàn khốc.", scores: ["Thanos", "Dr. Doom", "Ultron"] }
                 ]
             },
             {
-                text: "Nếu bất ngờ nhận được một khoản tiền lớn từ trên trời rơi xuống, bạn sẽ làm gì đầu tiên?",
+                q: "Nếu đang ở trong một concert của Linkin Park, vị trí và hành động của bạn sẽ là:",
                 options: [
-                    { text: "Nâng cấp không gian sống, mua những thiết bị hoặc đồ xa xỉ mình thích.", scores: { ironman: 1, starlord: 1 } },
-                    { text: "Dùng nó để giải quyết triệt để một vấn đề lớn, dù người khác có hiểu hay không.", scores: { thanos: 1, ultron: 1, doom: 1 } },
-                    { text: "Trích một phần lo cho gia đình, người thân, phần còn lại cất đi thật kỹ.", scores: { antman: 1, spider: 1, panther: 1 } },
-                    { text: "Chẳng quan tâm lắm, tiền bạc không phải là thứ tạo ra sức mạnh thực sự.", scores: { thor: 1, hela: 1, wanda: 1, widow: 1 } }
+                    { text: "Khu kỹ thuật (FOH), phân tích cách họ đánh synth, set up âm thanh và ánh sáng.", scores: ["Iron Man", "Ultron", "Dr. Doom"] },
+                    { text: "Lao thẳng vào giữa mosh-pit, gào thét khản cổ và giải phóng năng lượng.", scores: ["Thor", "Hela"] },
+                    { text: "Đứng lùi lại, khoanh tay cảm nhận sức nặng triết học trong từng lời hát.", scores: ["Doctor Strange", "Thanos"] },
+                    { text: "Hát theo nhiệt tình nhưng luôn để ý xem bạn bè có bị xô đẩy hay không.", scores: ["Captain America", "Spider-Man"] }
                 ]
             },
             {
-                text: "Trong nhóm làm việc, có một thành viên liên tục làm trễ tiến độ. Phản xạ của bạn là:",
+                q: "Đâu là yếu tố âm nhạc trong LP đại diện cho cách bạn giải quyết vấn đề?",
                 options: [
-                    { text: "Trực tiếp nói chuyện riêng, tìm hiểu nguyên nhân và động viên họ.", scores: { cap: 1, spider: 1 } },
-                    { text: "Tự mình gánh luôn phần việc của họ cho nhanh, đỡ phải nói nhiều.", scores: { ironman: 1, strange: 1, widow: 1 } },
-                    { text: "Loại họ ra khỏi nhóm không thương tiếc để bảo vệ kết quả chung.", scores: { thanos: 1, doom: 1, hela: 1 } },
-                    { text: "Nổi cáu, cảm thấy công sức của mình bị coi thường và tranh luận gay gắt.", scores: { wanda: 1, thor: 1, loki: 1 } }
+                    { text: "Rap của Mike Shinoda – Nhịp nhàng, sắc bén, tính toán logic và hệ thống.", scores: ["Iron Man", "Doctor Strange", "Dr. Doom"] },
+                    { text: "Scream của Chester – Giải phóng cảm xúc mạnh mẽ, áp đảo mọi thứ xung quanh.", scores: ["Thor", "Hela", "Loki"] },
+                    { text: "Pha trộn Rock và Hiphop – Tìm kiếm sự cân bằng và giải pháp dung hòa.", scores: ["Captain America", "Thanos"] },
+                    { text: "Âm thanh điện tử kỳ lạ – Linh hoạt, phi truyền thống và luôn thích nghi.", scores: ["Spider-Man", "Ultron"] }
                 ]
             },
             {
-                text: "Không gian làm việc hoặc phòng ngủ của bạn thường trong trạng thái:",
+                q: "Cách bạn sẽ đoạt lấy Ngôi Báu Sắt (Westeros) là:",
                 options: [
-                    { text: "Cực kỳ gọn gàng, ngăn nắp, mọi thứ đều có vị trí cố định.", scores: { cap: 1, panther: 1, ultron: 1 } },
-                    { text: "Bừa bộn nhưng 'trong tầm kiểm soát' – nhìn lộn xộn nhưng biết đồ nằm ở đâu.", scores: { ironman: 1, starlord: 1, antman: 1 } },
-                    { text: "Tối giản đến mức lạnh lùng, chỉ có những đồ vật thật sự cần thiết.", scores: { widow: 1, thanos: 1, doom: 1 } },
-                    { text: "Trang trí theo cảm hứng, nhiều đồ lưu niệm, hơi mộng mơ.", scores: { wanda: 1, spider: 1, thor: 1 } }
+                    { text: "Dùng sức mạnh quân sự áp đảo, đốt rụi mọi thứ cản đường.", scores: ["Hela", "Thor"] },
+                    { text: "Dùng trí tuệ, lập liên minh tài chính, thao túng các gia tộc lớn.", scores: ["Loki", "Iron Man"] },
+                    { text: "Dùng quyền năng hắc ám, tri thức cổ xưa để ép tất cả quỳ gối.", scores: ["Dr. Doom", "Thanos", "Doctor Strange"] },
+                    { text: "Tôi không cần ngai vàng. Tôi chiến đấu bảo vệ vương quốc khỏi Bóng Trắng.", scores: ["Captain America", "Spider-Man"] }
                 ]
             },
             {
-                text: "Bạn bị lạc vào một khu rừng lạ không có sóng điện thoại. Phản ứng đầu tiên của bạn?",
+                q: "Sự kiện Huyết Hôn cướp đi đồng minh thân cận nhất. Phản xạ của bạn?",
                 options: [
-                    { text: "Bình tĩnh phân tích hướng mặt trời, địa hình để tìm đường ra logic nhất.", scores: { strange: 1, panther: 1, widow: 1 } },
-                    { text: "Tận hưởng sự yên tĩnh này một chút, coi như một chuyến phiêu lưu.", scores: { thor: 1, starlord: 1, hela: 1 } },
-                    { text: "Chế tạo công cụ sinh tồn hoặc tìm cách phát tín hiệu từ đồ xung quanh.", scores: { ironman: 1, antman: 1, ultron: 1 } },
-                    { text: "Cảm thấy bất an, vội vàng di chuyển để tìm thấy bóng dáng con người.", scores: { spider: 1, wanda: 1 } }
+                    { text: "Nuốt hận, lên kế hoạch trả thù tỉ mỉ, hoàn hảo đến từng chi tiết cho 10 năm sau.", scores: ["Dr. Doom", "Thanos", "Ultron"] },
+                    { text: "Nổi điên, xách vũ khí lao thẳng đến nhà kẻ thù để san bằng trong đêm.", scores: ["Thor", "Hela"] },
+                    { text: "Tập hợp người sống sót, củng cố lực lượng bằng danh dự và niềm tin.", scores: ["Captain America", "Spider-Man"] },
+                    { text: "Dùng mưu hèn kế bẩn, ảo ảnh để làm nội bộ kẻ thù tự tàn sát lẫn nhau.", scores: ["Loki", "Doctor Strange"] }
                 ]
             },
             {
-                text: "Nếu phải chọn một con vật nuôi, bạn sẽ chọn phong cách nào?",
+                q: "Gia ngôn (Motto) của gia tộc nào trong GoT giống triết lý sống của bạn nhất?",
                 options: [
-                    { text: "Một chú chó trung thành, luôn ở bên cạnh bảo vệ và nghe lời bạn.", scores: { cap: 1, thor: 1 } },
-                    { text: "Một con mèo độc lập, bí ẩn, lúc nóng lúc lạnh, tự lo được bản thân.", scores: { widow: 1, loki: 1, hela: 1 } },
-                    { text: "Một sinh vật độc lạ (như chim ưng/quạ) - biểu tượng của tầm nhìn, trí tuệ.", scores: { strange: 1, doom: 1, thanos: 1 } },
-                    { text: "Con gì cũng được, miễn là nó ngáo ngơ, đáng yêu và biết làm trò cười.", scores: { antman: 1, starlord: 1, spider: 1 } }
+                    { text: "\"Winter is Coming\" – Luôn cảnh giác, chuẩn bị cho tình huống xấu nhất.", scores: ["Captain America", "Thanos", "Doctor Strange"] },
+                    { text: "\"Fire and Blood\" – Chinh phạt, quyền lực tuyệt đối, chấp nhận bản ngã.", scores: ["Hela", "Ultron"] },
+                    { text: "\"Hear Me Roar\" – Tự tôn cao ngất, di sản, và luôn trả đủ những món nợ.", scores: ["Iron Man", "Dr. Doom"] },
+                    { text: "\"Growing Strong\" – Thích nghi, sinh tồn bằng sự khéo léo, ẩn giấu gai nhọn.", scores: ["Loki", "Spider-Man"] }
                 ]
             },
             {
-                text: "Khi xem một bức tranh trừu tượng cực kỳ khó hiểu tại bảo tàng, suy nghĩ của bạn là:",
+                q: "Chiếc Nón Phân Loại bối rối khi xếp bạn vào nhà nào ở Hogwarts?",
                 options: [
-                    { text: "Cố gắng phân tích từng nét để tìm ra ý nghĩa triết học sâu xa.", scores: { strange: 1, ultron: 1, doom: 1 } },
-                    { text: "'Trời ạ, cái này tôi nhắm mắt quẹt vài đường cũng ra, có gì đâu.'", scores: { ironman: 1, starlord: 1, loki: 1 } },
-                    { text: "Đứng im cảm nhận màu sắc và cảm xúc, không cần dùng não để hiểu.", scores: { wanda: 1, thor: 1 } },
-                    { text: "Lướt qua nhanh chóng, bạn thích những thứ thực tế, rõ ràng hơn.", scores: { widow: 1, cap: 1, panther: 1 } }
+                    { text: "Gryffindor/Slytherin: Cực kỳ dũng cảm nhưng cũng đầy tham vọng và kiêu hãnh.", scores: ["Iron Man", "Thor", "Loki"] },
+                    { text: "Ravenclaw/Slytherin: Có trí tuệ thiên tài nhưng quá thực dụng, muốn kiểm soát.", scores: ["Doctor Strange", "Dr. Doom", "Ultron"] },
+                    { text: "Hufflepuff/Gryffindor: Dũng cảm xả thân nhưng hành động vì tình yêu thương.", scores: ["Captain America", "Spider-Man"] },
+                    { text: "Nón hét lên vì thấy tâm trí bạn quá hỗn mang, cực đoan và tăm tối.", scores: ["Thanos", "Hela"] }
                 ]
             },
             {
-                text: "Lời nhận xét nào từ người khác khiến bạn cảm thấy tổn thương hoặc khó chịu nhất?",
+                q: "Khi Ông kẹ (Boggart - nỗi sợ lớn nhất) xuất hiện, nó biến thành:",
                 options: [
-                    { text: "\"Bạn quá nguyên tắc, cứng nhắc và nhàm chán.\"", scores: { cap: 1, panther: 1 } },
-                    { text: "\"Bạn chỉ đang ra vẻ thôi chứ chẳng có tài năng gì đặc biệt.\"", scores: { ironman: 1, loki: 1, doom: 1 } },
-                    { text: "\"Bạn quá yếu đuối và luôn để cảm xúc chi phối mọi thứ.\"", scores: { wanda: 1, spider: 1, thor: 1 } },
-                    { text: "\"Bạn thật độc ác, máu lạnh, không quan tâm đến ai.\"", scores: { thanos: 1, ultron: 1, hela: 1 } }
+                    { text: "Bạn mất đi toàn bộ quyền lực, tri thức, trở thành kẻ bất lực.", scores: ["Dr. Doom", "Thanos", "Ultron"] },
+                    { text: "Thi thể những người bạn yêu thương vì bạn không đủ sức mạnh cứu họ.", scores: ["Iron Man", "Spider-Man", "Captain America"] },
+                    { text: "Một khoảng không nơi bạn bị lãng quên, coi thường, tước đoạt hào quang.", scores: ["Loki", "Hela"] },
+                    { text: "Một thế giới nơi logic, phép thuật và quy luật tự nhiên hoàn toàn sụp đổ.", scores: ["Doctor Strange", "Thor"] }
                 ]
             },
             {
-                text: "Trước khi đưa ra một quyết định quan trọng thay đổi cuộc đời, bạn thường:",
+                q: "Nếu chỉ được sở hữu một Bảo bối Tử thần, bạn chọn cái nào?",
                 options: [
-                    { text: "Nhốt mình trong phòng kín, tự phân tích rủi ro và không cho ai can thiệp.", scores: { doom: 1, thanos: 1, widow: 1, strange: 1 } },
-                    { text: "Chủ động tìm đến tham khảo ý kiến của người mà bạn tin tưởng nhất.", scores: { cap: 1, antman: 1, panther: 1 } },
-                    { text: "Để mọi thứ tới sát nút rồi nhắm mắt quyết định theo trực giác.", scores: { starlord: 1, spider: 1, loki: 1 } },
-                    { text: "Lên mạng tìm kiếm số liệu thống kê, so sánh thiệt hơn rõ ràng.", scores: { ironman: 1, ultron: 1 } }
+                    { text: "Đũa phép Cơm nguội – Sức mạnh áp đảo, uy quyền không ai đánh bại được.", scores: ["Hela", "Dr. Doom", "Thor"] },
+                    { text: "Viên đá Phục sinh – Vì bạn không thể buông bỏ những mất mát trong quá khứ.", scores: ["Iron Man", "Thanos", "Captain America"] },
+                    { text: "Áo choàng Tàng hình – Quan sát, trốn tránh rắc rối, làm việc trong bóng tối.", scores: ["Loki", "Spider-Man"] },
+                    { text: "Tự nghiên cứu cách chúng được tạo ra và chế tác bảo bối vượt trội hơn.", scores: ["Doctor Strange", "Ultron"] }
                 ]
             },
             {
-                text: "Đêm khuya khó ngủ, vắt tay lên trán, bạn thường suy nghĩ về điều gì?",
+                q: "Trường phái phép thuật nào thu hút bạn nhất?",
                 options: [
-                    { text: "Những lỗi lầm, những người mình đã đánh mất trong quá khứ.", scores: { wanda: 1, widow: 1, spider: 1 } },
-                    { text: "Tương lai vĩ mô, các mối đe dọa hoặc cách để mọi thứ vận hành trơn tru hơn.", scores: { thanos: 1, doom: 1, ironman: 1, strange: 1 } },
-                    { text: "Những kỷ niệm vui vẻ, những chuyến đi cùng bạn bè, gia đình.", scores: { cap: 1, antman: 1, thor: 1, starlord: 1 } },
-                    { text: "Kế hoạch ngày mai làm sao để có tiếng nói hơn, chứng tỏ bản thân.", scores: { loki: 1, hela: 1, ultron: 1 } }
+                    { text: "Thần Hộ Mệnh – Phép thuật sinh ra từ ký ức hạnh phúc, khao khát bảo vệ.", scores: ["Captain America", "Spider-Man", "Thor"] },
+                    { text: "Trường Sinh Linh Giá – Đảm bảo sự bất tử, di sản và vương quyền mãi mãi.", scores: ["Dr. Doom", "Ultron", "Hela"] },
+                    { text: "Bế Quan Bí Thuật – Đọc thấu tâm trí, xây dựng pháo đài tinh thần bất khả xâm phạm.", scores: ["Loki", "Thanos"] },
+                    { text: "Giả Kim Thuật & Biến Hình – Dùng trí tuệ định hình lại cấu trúc vật chất thế giới.", scores: ["Doctor Strange", "Iron Man"] }
                 ]
             }
         ];
 
-        // --- STREAMING_CHUNK:Implementing Application State and Core Logic... ---
-        let currentQuestionIndex = 0;
-        let userScores = {};
-
-        function initScores() {
-            userScores = {};
-            for (let key in characters) {
-                userScores[key] = 0;
-            }
-        }
+        let currentQuestion = 0;
+        let userScores = {
+            "Iron Man": 0, "Captain America": 0, "Thor": 0, "Spider-Man": 0, "Doctor Strange": 0,
+            "Thanos": 0, "Loki": 0, "Dr. Doom": 0, "Hela": 0, "Ultron": 0
+        };
 
         function startQuiz() {
-            initScores();
-            currentQuestionIndex = 0;
-            
             document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.add('hidden');
-            
-            const quizScreen = document.getElementById('quiz-screen');
-            quizScreen.classList.remove('hidden');
-            quizScreen.classList.add('flex');
-            
-            renderQuestion();
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            loadQuestion();
         }
 
-        // --- STREAMING_CHUNK:Handling UI Rendering and Transitions... ---
-        function renderQuestion() {
-            const q = questions[currentQuestionIndex];
+        function loadQuestion() {
+            const qData = questions[currentQuestion];
+            document.getElementById('question-counter').innerText = `Câu ${currentQuestion + 1}/${questions.length}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+            document.getElementById('question-text').innerText = qData.q;
             
-            // Update UI elements
-            document.getElementById('question-number').innerText = `CÂU ${currentQuestionIndex + 1} / ${questions.length}`;
-            document.getElementById('question-text').innerText = q.text;
-            
-            // Update progress bar
-            const progress = (currentQuestionIndex / questions.length) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
-
-            // Trigger reflow for fade-in animation
-            const qContainer = document.getElementById('question-container');
-            qContainer.classList.remove('animate-fade-in');
-            void qContainer.offsetWidth; 
-            qContainer.classList.add('animate-fade-in');
-
-            // Generate option buttons
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
             
-            const labels = ['A', 'B', 'C', 'D'];
-            q.options.forEach((opt, index) => {
+            qData.options.forEach((opt) => {
                 const btn = document.createElement('button');
-                btn.className = 'option-btn w-full text-left p-5 rounded-xl font-medium text-gray-200 shadow-lg flex items-start gap-4';
-                
-                const labelSpan = document.createElement('span');
-                labelSpan.className = 'flex-shrink-0 w-8 h-8 rounded-full bg-[#EC1D24] text-white flex items-center justify-center font-marvel font-bold text-lg';
-                labelSpan.innerText = labels[index];
-                
-                const textSpan = document.createElement('span');
-                textSpan.className = 'mt-1 leading-snug';
-                textSpan.innerText = opt.text;
-
-                btn.appendChild(labelSpan);
-                btn.appendChild(textSpan);
-                
+                btn.className = "option-btn text-left p-4 rounded-lg border border-slate-600 bg-slate-700 text-slate-200 text-lg hover:text-white";
+                btn.innerText = opt.text;
                 btn.onclick = () => selectOption(opt.scores);
                 optionsContainer.appendChild(btn);
             });
         }
 
-        // --- STREAMING_CHUNK:Calculating Scores and Rendering Results... ---
-        function selectOption(scores) {
-            // Apply weights
-            for (let char in scores) {
-                userScores[char] += scores[char];
-            }
+        function selectOption(characterArray) {
+            // Cộng điểm cho các nhân vật liên kết với đáp án
+            characterArray.forEach(char => {
+                userScores[char] += 1;
+            });
 
-            currentQuestionIndex++;
-
-            if (currentQuestionIndex < questions.length) {
-                renderQuestion();
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
             } else {
-                showResult();
+                showResults();
             }
         }
 
-        function showResult() {
-            document.getElementById('quiz-screen').classList.remove('flex');
+        function showResults() {
             document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            // Sắp xếp điểm từ cao xuống thấp
+            const sortedChars = Object.entries(userScores).sort((a, b) => b[1] - a[1]);
             
-            // Determine winner (handle ties with a random pick among highest scores)
-            let maxScore = -1;
-            let potentialWinners = [];
+            const top1 = sortedChars[0];
+            const top2 = sortedChars[1];
 
-            for (let char in userScores) {
-                if (userScores[char] > maxScore) {
-                    maxScore = userScores[char];
-                    potentialWinners = [char];
-                } else if (userScores[char] === maxScore) {
-                    potentialWinners.push(char);
-                }
-            }
+            // Áp dụng Logic: Tính % dựa trên tổng điểm của Top 1 + Top 2
+            const totalTopPoints = top1[1] + top2[1];
+            const top1Percent = Math.round((top1[1] / totalTopPoints) * 100);
+            const top2Percent = 100 - top1Percent; // Đảm bảo tổng luôn là 100%
+
+            document.getElementById('top1-name').innerText = top1[0];
+            document.getElementById('top1-percent').innerText = `${top1Percent}%`;
             
-            const resultCharKey = potentialWinners[Math.floor(Math.random() * potentialWinners.length)];
-            const result = characters[resultCharKey];
+            document.getElementById('top2-name').innerText = top2[0];
+            document.getElementById('top2-percent').innerText = `${top2Percent}%`;
 
-            // Populate Result UI
-            document.getElementById('result-name').innerText = result.name;
-            document.getElementById('result-title').innerText = result.title;
-            document.getElementById('result-desc').innerText = result.desc;
-            document.getElementById('result-quote').innerText = result.quote;
-
-            const badge = document.getElementById('alignment-badge');
-            const card = document.getElementById('result-card');
-
-            // Apply Hero vs Villain styling
-            if (result.type === 'hero') {
-                badge.innerText = 'HERO';
-                badge.className = 'absolute top-0 right-0 font-marvel text-sm font-bold px-4 py-1 rounded-bl-xl text-white badge-hero';
-                card.className = 'w-full max-w-md bg-black/70 border-2 rounded-xl p-8 mb-8 mt-2 relative overflow-hidden transition-all duration-700 hero-glow animate-fade-in';
-            } else {
-                badge.innerText = 'VILLAIN';
-                badge.className = 'absolute top-0 right-0 font-marvel text-sm font-bold px-4 py-1 rounded-bl-xl text-white badge-villain';
-                card.className = 'w-full max-w-md bg-black/70 border-2 rounded-xl p-8 mb-8 mt-2 relative overflow-hidden transition-all duration-700 villain-glow animate-fade-in';
-            }
-
-            // Display Result Screen
-            const resultScreen = document.getElementById('result-screen');
-            resultScreen.classList.remove('hidden');
-            resultScreen.classList.add('flex');
-            
-            // Complete Progress Bar visually
-            document.getElementById('progress-bar').style.width = '100%';
+            // Thông điệp bổ sung
+            const msg = document.getElementById('result-message');
+            msg.innerText = `Sâu thẳm bên trong, bạn mang bản ngã kiêu hãnh của ${top1[0]}, nhưng đôi khi, phần bóng tối/trách nhiệm của ${top2[0]} vẫn trỗi dậy dẫn lối quyết định của bạn.`;
         }
-
-        function resetQuiz() {
-            const resultScreen = document.getElementById('result-screen');
-            resultScreen.classList.add('hidden');
-            resultScreen.classList.remove('flex');
-            
-            document.getElementById('start-screen').classList.remove('hidden');
-        }
-
-        // Initialize state
-        window.onload = function() {
-            initScores();
-        };
     </script>
 </body>
 </html>
